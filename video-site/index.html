@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Видео-сайт</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="stage" id="stage">
+    <!-- Видео 1: играет один раз при входе -->
+    <video id="video1" class="layer is-active" src="videos/video1.mp4"
+           muted playsinline webkit-playsinline preload="auto"></video>
+
+    <!-- Видео 2: стартует после первого, зациклено -->
+    <video id="video2" class="layer" src="videos/video2.mp4"
+           muted playsinline webkit-playsinline loop preload="auto"></video>
+
+    <!-- Кнопка звука -->
+    <button id="soundBtn" class="sound" type="button" aria-pressed="false">Включить звук</button>
+
+    <!-- Показывается, если телефон заблокировал автозапуск -->
+    <button id="startBtn" class="start" type="button" hidden>Нажмите, чтобы начать</button>
+
+    <!-- Сообщение об ошибке (например, нет файла) -->
+    <p id="error" class="error" role="alert" hidden></p>
+  </main>
+
+  <!-- Показывается только на компьютере -->
+  <section class="desktop-only" id="desktopNotice">
+    <p>Сайт сделан для телефона.<br>Откройте эту страницу на смартфоне.</p>
+  </section>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

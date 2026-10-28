@@ -1,0 +1,119 @@
+:root {
+  --bg: #000;
+  --fg: #fff;
+  --ui-bg: rgba(0, 0, 0, 0.55);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* dvh учитывает адресную строку мобильного браузера */
+.stage {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Оба видео лежат друг на друге на весь экран */
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.layer.is-active { opacity: 1; }
+
+/* Кнопки — крупные, под палец (минимум 44px) */
+.sound,
+.start {
+  font: inherit;
+  color: var(--fg);
+  background: var(--ui-bg);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  min-height: 44px;
+}
+.sound:focus-visible, .start:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+/* Отступы с учётом «чёлки» и жестовой полосы */
+.sound {
+  position: absolute;
+  right: calc(1rem + env(safe-area-inset-right));
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+}
+
+.start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem 1.8rem;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+.start[hidden], .error[hidden] { display: none; }
+
+.error {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  padding: 1rem 1.2rem;
+  text-align: center;
+  font-size: 1rem;
+  background: var(--ui-bg);
+  border-radius: 12px;
+}
+
+/* Сообщение для компьютера скрыто по умолчанию */
+.desktop-only {
+  display: none;
+  position: fixed;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  background: var(--bg);
+  z-index: 10;
+}
+
+/* Компьютер: широкий экран + мышь. Планшеты и телефоны (касание) сюда не попадают */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .desktop-only { display: flex; }
+  .stage { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .layer { transition: none; }
+}
